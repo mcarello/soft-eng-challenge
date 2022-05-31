@@ -1,0 +1,20 @@
+{
+    "python.pythonPath":"C:/Users/maria/AppData/Local/pypoetry/Cache/virtualenvs/flugel-challenge-_SpXAp4W-py3.9/Scripts/python.exe",
+    "python.testing.pytestArgs": [
+        "test"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "files.exclude":{
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/.pytest_cache":true,
+        "**/__pycache":true,
+    },
+    "python.linting.flake8Enabled": false,
+    "python.linting.enabled": true
+}
