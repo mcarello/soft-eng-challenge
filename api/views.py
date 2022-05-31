@@ -1,12 +1,16 @@
 from rest_framework.response import Response
 from rest_framework import status
-
+from drf_yasg import openapi
 from . import services as s
-from rest_framework.decorators import api_view
+from . import responses as schema
+from rest_framework.decorators import api_view 
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework.response import Response
-import os
+from . import serializers as serializer 
 from django.conf import settings
     
+    
+@swagger_auto_schema(method='get',operation_description="Get all the Mothership", responses=schema.mothership_list_response_schema)
 @api_view(['GET'])
 def mothership_list(request):   
     code , msg = s.mothership_get()
@@ -14,7 +18,8 @@ def mothership_list(request):
     return Response(data=msg ,status=code)
 
 
-
+@swagger_auto_schema(methods=['delete'],operation_description="Delete a Mothership" ,responses=schema.mothership_delete_response_schema)
+@swagger_auto_schema(methods=['get'],operation_description="Get Mothership detail", responses=schema.mothership_detail_response_schema)
 @api_view(['GET','DELETE'])
 def mothership_detail(request,pk):  
     
@@ -33,7 +38,7 @@ def mothership_detail(request,pk):
             return Response({'error_message': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR) 
         
 
-        
+@swagger_auto_schema(method='post',request_body=serializer.Mothership_Post_Request,operation_description="Create a Mothership", responses=schema.mothership_create_response_schema)        
 @api_view(['POST'])
 def mothership_add(request):    
 
@@ -45,6 +50,8 @@ def mothership_add(request):
     
     return Response(msg,status=code)
     
+
+@swagger_auto_schema(method='post',request_body=serializer.Mothership_Add_Ship_Request, operation_description="Add Ship to a Mothership", responses=schema.mothership_add_ship_response_schema)
 @api_view(['POST'])
 def mothership_add_ship(request):
     
@@ -55,6 +62,7 @@ def mothership_add_ship(request):
 
     return Response(msg,status=code)
     
+@swagger_auto_schema(method='get', operation_description="Get all the Ships", responses=schema.mothership_list_response_schema)
 @api_view(['GET'])
 def ship_list(request):
     code,mList = s.ship_get()
@@ -62,6 +70,8 @@ def ship_list(request):
     return Response(data=mList ,status=code)    
 
 
+@swagger_auto_schema(methods=['get'],operation_description="Get the details of a Ship", responses=schema.ship_detail_response_schema)
+@swagger_auto_schema(methods=['delete'],operation_description="Delete a Ship" ,responses=schema.ship_delete_response_schema)
 @api_view(['GET','DELETE'])
 def ship_detail(request,pk):  
     if request.method == 'GET':
@@ -77,7 +87,7 @@ def ship_detail(request,pk):
         except Exception as e: 
             return Response({'error_message': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR) 
           
-    
+@swagger_auto_schema(method='post',request_body=serializer.Ship_Create_Request,operation_description="Create a Ship", responses=schema.ship_create_response_schema)    
 @api_view(['POST'])
 def ship_create(request):    
         
@@ -85,7 +95,7 @@ def ship_create(request):
 
     return Response(msg,status=code)
    
-    
+@swagger_auto_schema(method='post',request_body=serializer.Ship_Add_Member_Request,operation_description="Add crew member to a Ship", responses=schema.ship_add_member_response_schema)    
 @api_view(['POST'])
 def ship_add_crew(request):  
     
@@ -96,6 +106,8 @@ def ship_add_crew(request):
 
     return Response(msg,status=code)
     
+    
+@swagger_auto_schema(method='post',request_body=serializer.Ship_Switch_Member_Request,operation_description="Switch a crew member to other Ship", responses=schema.ship_switch_member_response_schema)    
 @api_view(['POST'])
 def ship_switch_crew(request):  
     
@@ -107,12 +119,15 @@ def ship_switch_crew(request):
 
     return Response(msg,status=code)
 
+@swagger_auto_schema(method='get',operation_description="Get all the Crew Members", responses=schema.crew_list_response_schema)
 @api_view(['GET'])
 def crew_list(request):   
     code , mList = s.crew_get()
          
     return Response(data=mList ,status=code)
 
+@swagger_auto_schema(methods=['get'],operation_description="Get details of a Crew Members", responses=schema.crew_detail_response_schema)
+@swagger_auto_schema(methods=['delete'],operation_description="Get all the Crew Members",responses=schema.crew_delete_response_schema)
 @api_view(['GET','DELETE'])
 def crew_detail(request,pk):
     
@@ -130,6 +145,8 @@ def crew_detail(request,pk):
         except Exception as e: 
             return Response({'error_message': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR) 
             
+
+@swagger_auto_schema(method='post',request_body=serializer.Crew_Post_Request, operation_description="Create a Crew member", responses=schema.crew_create_response_schema)
 @api_view(['POST'])
 def crew_create(request):  
             

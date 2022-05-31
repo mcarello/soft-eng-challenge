@@ -8,8 +8,8 @@ authors = ["mcarello <mariano.carello@gmail.com>"]
 python = "^3.9"
 Django = "3.2.13"
 djangorestframework = "3.13.1"
-django-rest-swagger = "2.2.0"
 names = "0.3.0"
+drf-yasg = "^1.20.0"
 
 [tool.poetry.dev-dependencies]
 autopep8 = "^1.6.0"
